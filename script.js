@@ -2,6 +2,8 @@ let canvas = document.getElementById("snake");
 let context = canvas.getContext('2d');
 let box = 32;
 let snake = [];
+let dificuldadeSelector = document.getElementById("dificuldade").value
+
 
 snake[0] = {
     x: 8 * box,
@@ -14,30 +16,16 @@ let food = {
     y: Math.floor(Math.random() * 15 + 1) * box
 }
 
-function criarBG() {
-    context.fillStyle = "lightgreen";
-    context.fillRect(0,0, 16 * box, 16 * box);
-}
+function playGame() {    
+    iniciarJogo();
+    document.getElementById("play").disabled = true; 
+    let dificuldadeValor = 100;
 
-function criarCobrinha(){
-    for(i=0; i < snake.length; i++){
-        context.fillStyle = "green";
-        context.fillRect(snake[i].x, snake[i].y, box, box);
-    }
-}
+if(dificuldadeSelector == "facil"){dificuldadeValor = 100}
+if(dificuldadeSelector == "medio"){dificuldadeValor = 60}
+if(dificuldadeSelector == "dificil"){dificuldadeValor = 40}
 
-function drawFood(){
-    context.fillStyle = "red";
-    context.fillRect(food.x, food.y, box, box); 
-}
-
-document.addEventListener('keydown', update);
-
-function update (event){
-    if(event.keyCode == 37 && direction != "right") direction = "left";
-    if(event.keyCode == 38 && direction != "down") direction = "up";
-    if(event.keyCode == 39 && direction != "left") direction = "right";
-    if(event.keyCode == 40 && direction != "up") direction = "down";
+let jogo = setInterval(iniciarJogo, dificuldadeValor);
 }
 
 function iniciarJogo(){
@@ -52,7 +40,7 @@ function iniciarJogo(){
             alert('Game Over :(');
         }
     }
-
+    
     criarBG();
     criarCobrinha();
     drawFood();
@@ -82,4 +70,30 @@ function iniciarJogo(){
     snake.unshift(newHead);
 }
 
-let jogo = setInterval(iniciarJogo, 100);
+
+function criarBG() {
+    context.fillStyle = "lightgreen";
+    context.fillRect(0,0, 16 * box, 16 * box);
+}
+
+function criarCobrinha(){
+    for(i=0; i < snake.length; i++){
+        context.fillStyle = "green";
+        context.fillRect(snake[i].x, snake[i].y, box, box);
+    }
+}
+
+function drawFood(){
+    context.fillStyle = "red";
+    context.fillRect(food.x, food.y, box, box); 
+}
+
+document.addEventListener('keydown', update);
+
+function update (event){
+    if(event.keyCode == 37 && direction != "right") direction = "left";
+    if(event.keyCode == 38 && direction != "down") direction = "up";
+    if(event.keyCode == 39 && direction != "left") direction = "right";
+    if(event.keyCode == 40 && direction != "up") direction = "down";
+}
+
