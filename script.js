@@ -1,9 +1,8 @@
-let canvas = document.getElementById("snake");
+function app(){
+    let canvas = document.getElementById("snake");
 let context = canvas.getContext('2d');
 let box = 32;
 let snake = [];
-let dificuldadeSelector = document.getElementById("dificuldade").value
-
 
 snake[0] = {
     x: 8 * box,
@@ -14,18 +13,6 @@ let direction = "right";
 let food = {
     x: Math.floor(Math.random() * 15 + 1) * box,
     y: Math.floor(Math.random() * 15 + 1) * box
-}
-
-function playGame() {    
-    iniciarJogo();
-    document.getElementById("play").disabled = true; 
-    let dificuldadeValor = 100;
-
-if(dificuldadeSelector == "facil"){dificuldadeValor = 100}
-if(dificuldadeSelector == "medio"){dificuldadeValor = 60}
-if(dificuldadeSelector == "dificil"){dificuldadeValor = 40}
-
-let jogo = setInterval(iniciarJogo, dificuldadeValor);
 }
 
 function iniciarJogo(){
@@ -44,6 +31,7 @@ function iniciarJogo(){
     criarBG();
     criarCobrinha();
     drawFood();
+ 
 
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
@@ -68,8 +56,16 @@ function iniciarJogo(){
     }
 
     snake.unshift(newHead);
+
+    document.getElementById("play").disabled = true;
 }
 
+let dificuldadeSelector = document.getElementById("dificuldade").value
+let dificuldadeValor = 100;
+
+if(dificuldadeSelector == "facil"){dificuldadeValor = 100}
+if(dificuldadeSelector == "medio"){dificuldadeValor = 60}
+if(dificuldadeSelector == "dificil"){dificuldadeValor = 40}
 
 function criarBG() {
     context.fillStyle = "lightgreen";
@@ -97,3 +93,6 @@ function update (event){
     if(event.keyCode == 40 && direction != "up") direction = "down";
 }
 
+let jogo = setInterval(iniciarJogo, dificuldadeValor);
+
+}
